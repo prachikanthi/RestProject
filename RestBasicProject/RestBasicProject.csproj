@@ -92,6 +92,7 @@
     <Compile Include="Helpers\SimpleServer.cs" />
     <Compile Include="Helpers\WebServer.cs" />
     <Compile Include="Library\SupportClass.cs" />
+    <Compile Include="Managers\ApiContext.cs" />
     <Compile Include="poko\Comments.cs" />
     <Compile Include="poko\Posts.cs" />
     <Compile Include="Requests\Serializes.cs" />

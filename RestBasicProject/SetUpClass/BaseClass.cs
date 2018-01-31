@@ -14,10 +14,10 @@ namespace RestBasicProject
         [SetUp]
         public void TestInitialize()
         {
-             ValidURI = "http://jsonplaceholder.typicode.com/";
-            // ValidURI ="http://localhost:8080/";
+            //  ValidURI = "http://jsonplaceholder.typicode.com/";
+            //  ValidURI ="http://localhost:8080/";
             //ValidURI = "http://www.example.com/1/2";
-
+            ValidURI = "http://www.newsblur.com";
             client = new RestClient();
             client.BaseUrl = new System.Uri(ValidURI);
             

@@ -18,7 +18,7 @@ namespace RestBasicProject.Helpers
 
             if (string.IsNullOrEmpty(prefix))
                 throw new ArgumentException("URI prefix is required");
-
+            _listener.Prefixes.Clear();
             _listener.Prefixes.Add(prefix);
             _listener.AuthenticationSchemes = authenticationSchemes;
 

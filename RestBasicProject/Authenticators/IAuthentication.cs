@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RestSharp;
+using RestSharp.Authenticators;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +8,11 @@ using System.Threading.Tasks;
 
 namespace RestBasicProject.Authenticators
 {
-    public interface IAuthentication
+    public interface IAuthentication :IAuthenticator
     {
-        void setAuthContext(AuthContext context);
+        // override void Authenticate(IRestClient client, IRestRequest request);
+         void setAuthContext(AuthContext context);
+
+
     }
 }

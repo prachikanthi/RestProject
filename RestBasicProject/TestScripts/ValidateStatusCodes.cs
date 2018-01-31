@@ -8,6 +8,7 @@ using RestSharp.Authenticators;
 using RestBasicProject.Helpers;
 using RestSharp;
 using System.Threading;
+using RestBasicProject.Authenticators;
 //using RestSharp.IntegrationTests.Helpers;
 
 namespace RestBasicProject
@@ -98,7 +99,7 @@ namespace RestBasicProject
         {
             //var baseUrl = new Uri("http://localhost:8888/");
 
-            //SupportClass support = new SupportClass();
+            SupportClass support = new SupportClass();
             using (SimpleServer.Create(client.BaseUrl.AbsoluteUri, UsernamePasswordEchoHandler))
             {
                 var client = new RestClient(ValidURI)
@@ -111,9 +112,23 @@ namespace RestBasicProject
                 Assert.IsTrue(response.Content.Contains("testuser | testpassword") );
             }
         }
+        [Test]
+        public void Can_Authenticate_With_Basic_Auth()
+        {
+
+            AuthContext context = new BasicAuthContext("prachijk", "prachi");
+            IAuthentication ias = new BasicAuthentication();
+            ias.setAuthContext(context);
+
+            var request = new RestRequest("/api/login", Method.POST);
+            ias.Authenticate(client, request);
+            var response = client.Execute(request);
+            Assert.IsTrue(response.Content.Contains("testuser | testpassword"));
+            }
+        }
 
 
-       
-    }
+
+    
 
 }
