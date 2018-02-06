@@ -1,7 +1,7 @@
 ﻿namespace RestBasicProject
 {
     /// <summary>
-    /// This is poko for Comments of URL :"http://jsonplaceholder.typicode.com/"
+    /// This is poco for Comments of URL :"http://jsonplaceholder.typicode.com/"
     /// </summary>
     public class Comments
     {

@@ -93,8 +93,8 @@
     <Compile Include="Authenticators\XAuthentication.cs" />
     <Compile Include="Deserialization\Deserializes.cs" />
     <Compile Include="Library\SupportClass.cs" />
-    <Compile Include="poko\Comments.cs" />
-    <Compile Include="poko\Posts.cs" />
+    <Compile Include="poco\Comments.cs" />
+    <Compile Include="poco\Posts.cs" />
     <Compile Include="Requests\Serializes.cs" />
     <Compile Include="SetUpClass\BaseClass.cs" />
     <Compile Include="TestScripts\ValidateStatusCodes.cs" />
