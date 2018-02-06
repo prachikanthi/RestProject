@@ -1,40 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using RestSharp;
+﻿using RestSharp;
 using RestSharp.Deserializers;
-using System.Globalization;
 using RestSharp.Extensions;
-using System.Reflection;
+using System;
 using System.Collections;
-
-
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Reflection;
 
 namespace RestBasicProject
 {
     public class Deserializes : IDeserializer
     {
-       
-        // private IDeserializer serializer;
-
-        //public Deserializes(IDeserializer serializer)
-        //{
-        //    this.serializer = serializer;
-        //}
-
-        //public T Deserialize<T>(RestSharp.IRestResponse response)
-        //{
-        //    var content = response.Content;
-
-        //    using (var stringReader = new StringReader(content))
-        //    {
-        //        using (var jsonTextReader = new  (stringReader))
-        //        {
-        //            return serializer.Deserialize<T>(jsonTextReader);
-        //        }
-        //    }
-        //}
-
         public CultureInfo Culture { get; set; }
 
         public Deserializes()
@@ -48,11 +25,6 @@ namespace RestBasicProject
             set { }
         }
 
-        //T IDeserializer.Deserialize<T>(IRestResponse response)
-        //{
-        //    return JsonConvert.DeserializeObject<T>(response.Content);
-        //}
-
         public string DateFormat { get; set; }
 
         public string RootElement { get; set; }
@@ -61,8 +33,6 @@ namespace RestBasicProject
 
         T IDeserializer.Deserialize<T>(IRestResponse response)
         {
-           // IEnumerable < Deserializes > object = jsonSerializer.Deserialize<IEnumerable<Deserializes>>(json);
-
             var json = FindRoot(response.Content);
 
             return (T)ConvertValue(typeof(T).GetTypeInfo(), json);
@@ -70,53 +40,16 @@ namespace RestBasicProject
 
         private object FindRoot(string content)
         {
-            //IDictionary<string, object> dictionary = new Dictionary<string, object>();
-
-            ////  object json = SimpleJson.SimpleJson.DeserializeObject(content);
-
-
-            // JObject json= JObject.Parse(content);
-            //var root = json.Root;
-            //if (!RootElement.HasValue()) return json;
-
-            //if (!(json is IDictionary<string, object>))
-            //    return json;
-
-            //return root;
-            // return dictionary.TryGetValue(RootElement,out object result) ? result : json;
-
-            //object json = SimpleJson.SimpleJson.DeserializeObject(content);
-            //var result =new object();
-            //IDictionary<string, object> dictionary = new Dictionary<string, object>();
-            //if (!RootElement.HasValue()) return json;
-
-            //if (!(json is IDictionary<string, object>))
-            //   return json;
-
-            //return dictionary.TryGetValue(RootElement, out result) ? result : json;
-           // IDictionary<string, Dictionary<string, object>> json = SimpleJson.SimpleJson.DeserializeObject<Dictionary<string, Dictionary<string, object>>>(content);
-             object json = SimpleJson.SimpleJson.DeserializeObject(content);
-            // RestSharp.Deserializers.JsonDeserializer json = new RestSharp.Deserializers.JsonDeserializer();
-            //  var rootObject = deserial.Deserialize<T>(content);
+            object json = SimpleJson.SimpleJson.DeserializeObject(content);
             object result;
-            // dynamic json = JValue.Parse(content);
-            // var json = JsonConvert.DeserializeObject<List<object>>(content);
             if (!this.RootElement.HasValue())
                 return json;
 
             IDictionary<string, object> dictionary = json as IDictionary<string, object>;
 
-            //if (dictionary != null)
-            //{
+            return (dictionary.TryGetValue(this.RootElement, out result)) ? result : json;
 
-            return (dictionary.TryGetValue(this.RootElement, out result))? result : json;
-            
-             //   return result;
-            
-        
 
-           // return dictionary.TryGetValue(this.RootElement, out result);
-           
         }
 
         private object ConvertValue(TypeInfo typeInfo, object value)
@@ -205,14 +138,11 @@ namespace RestBasicProject
                 // nested property classes
                 return CreateAndMap(type, value);
             }
-           
+
             else
             {
-
                 // nested property classes
-                 return CreateAndMap(type, value);
-                //return
-                //     Mapper.Map(type, value);
+                return CreateAndMap(type, value);
             }
 
             return null;
@@ -221,11 +151,9 @@ namespace RestBasicProject
         private object CreateAndMap(Type type, object element)
         {
             object instance = Activator.CreateInstance(type);
-           
 
             IDictionary<string, object> dd = element as IDictionary<string, object>;
-
-            Map(instance,dd);
+            Map(instance, dd);
 
             return instance;
         }
@@ -371,4 +299,4 @@ namespace RestBasicProject
         }
 
     }
-} 
+}

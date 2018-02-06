@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
-using RestSharp;
 using NUnit.Framework.Interfaces;
-using Embarr.WebAPI.MediaTypes;
+using RestSharp;
 
 namespace RestBasicProject
 {
@@ -14,17 +13,13 @@ namespace RestBasicProject
         [SetUp]
         public void TestInitialize()
         {
-            //  ValidURI = "http://jsonplaceholder.typicode.com/";
-            //  ValidURI ="http://localhost:8080/";
-            //ValidURI = "http://www.example.com/1/2";
+            //ValidURI = "http://jsonplaceholder.typicode.com/";
             ValidURI = "http://www.newsblur.com";
             client = new RestClient();
             client.BaseUrl = new System.Uri(ValidURI);
-            
-            client.AddHandler("application/json",new Deserializes());
-       
-        }
 
+            client.AddHandler("application/json", new Deserializes());
+        }
 
         [TearDown]
         public void TestCleanUp()

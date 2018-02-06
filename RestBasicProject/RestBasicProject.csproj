@@ -87,12 +87,9 @@
     <Compile Include="Authenticators\AuthContext.cs" />
     <Compile Include="Authenticators\BasicAuthContext.cs" />
     <Compile Include="Authenticators\BasicAuthentication.cs" />
-    <Compile Include="Authenticators\IAuthentication.cs" />
+    <Compile Include="Authenticators\XAuthentication.cs" />
     <Compile Include="Deserialization\Deserializes.cs" />
-    <Compile Include="Helpers\SimpleServer.cs" />
-    <Compile Include="Helpers\WebServer.cs" />
     <Compile Include="Library\SupportClass.cs" />
-    <Compile Include="Managers\ApiContext.cs" />
     <Compile Include="poko\Comments.cs" />
     <Compile Include="poko\Posts.cs" />
     <Compile Include="Requests\Serializes.cs" />
@@ -103,6 +100,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Managers\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

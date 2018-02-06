@@ -1,28 +1,22 @@
 ﻿using RestSharp.Authenticators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RestSharp;
 
 namespace RestBasicProject.Authenticators
 {
-    public class BasicAuthentication : IAuthentication
+    public class BasicAuthentication : XAuthentication
     {
-        private BasicAuthContext context;
-
-        public void Authenticate(IRestClient client, IRestRequest request)
+        public BasicAuthentication(AuthContext authContext) : base(authContext)
         {
-            request.AddParameter("username", context.getUsername());
-            request.AddParameter("password", context.getPassword());
 
-            client.Authenticator = new HttpBasicAuthenticator(context.getUsername(), context.getPassword());
         }
 
-        public void setAuthContext(AuthContext context)
+        public override void Authenticate(IRestClient client, IRestRequest request)
         {
-          this.context = (BasicAuthContext)context;
+            request.AddParameter("username", ((BasicAuthContext)authContext).GetUsername());
+            request.AddParameter("password", ((BasicAuthContext)authContext).GetPassword());
+
+            client.Authenticator = new HttpBasicAuthenticator(((BasicAuthContext)authContext).GetUsername(), ((BasicAuthContext)authContext).GetPassword());
         }
+
     }
 }

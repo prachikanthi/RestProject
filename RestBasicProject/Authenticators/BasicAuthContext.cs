@@ -1,17 +1,9 @@
-﻿using RestBasicProject.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace RestBasicProject.Authenticators
 {
     public class BasicAuthContext : AuthContext
     {
-        AuthContext context;
         private string username;
         private string password;
         public BasicAuthContext(string userName,string password)
@@ -20,12 +12,12 @@ namespace RestBasicProject.Authenticators
             this.password = password;
         }
 
-        public String getUsername()
+        public string GetUsername()
         {
             return username;
         }
 
-        public String getPassword()
+        public string GetPassword()
         {
             return password;
         }

@@ -1,38 +1,13 @@
-﻿using System;
-using System.Diagnostics;
-using System.Net;
-using System.Text;
-using System.Web;
-using NUnit.Framework;
-using RestSharp.Authenticators;
-using RestBasicProject.Helpers;
-using RestSharp;
-using System.Threading;
+﻿using NUnit.Framework;
 using RestBasicProject.Authenticators;
-//using RestSharp.IntegrationTests.Helpers;
+using RestSharp;
+using System.Net;
 
 namespace RestBasicProject
 {
     [TestFixture]
     class ValidateStatusCodes : BaseClass
     {
-
-        private static void UsernamePasswordEchoHandler(HttpListenerContext context)
-        {
-            var header = context.Request.Headers["Authorization"];
-            var parts = Encoding.ASCII.GetString(Convert.FromBase64String(header.Substring("Basic ".Length)))
-                .Split(':');
-
-
-            string responseString = string.Join(" | ", parts);
-            byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
-            // Get a response stream and write the response to it.
-           // response.ContentLength64 = buffer.Length;
-            System.IO.Stream output = context.Response.OutputStream;
-            output.Write(buffer, 0, buffer.Length);
-            Thread.Sleep(4000);
-           // context.Response.OutputStream.WriteStringUtf8(string.Join("|", parts));
-        }
 
         [Test]
         public void validateStatusCodeForComments()
@@ -47,8 +22,7 @@ namespace RestBasicProject
         public void validateCommentsUsingID()
         {
             SupportClass support = new SupportClass();
-
-            var request = new RestRequest("comments/11",Method.GET);
+            var request = new RestRequest("comments/11", Method.GET);
             request.AddUrlSegment("id", "11");
 
             Comments comment = support.Execute<Comments>(request, client);
@@ -59,11 +33,7 @@ namespace RestBasicProject
         public void validateCommentsUsingIDPost()
         {
             SupportClass support = new SupportClass();
-           
-
-            
-              var request = new RestRequest("/posts", Method.POST);
-
+            var request = new RestRequest("/posts", Method.POST);
 
             Posts pos = new Posts();
             pos.title = "New";
@@ -71,64 +41,27 @@ namespace RestBasicProject
             pos.body = "bar";
             request.RequestFormat = DataFormat.Json;
             request.JsonSerializer = new Serializes();
-            string s=request.JsonSerializer.Serialize(pos);
-            // request.AddBody(pos);
+            string s = request.JsonSerializer.Serialize(pos);
 
-            // var request = new RestRequest();
-            // request.Method = Method.POST;
-            //request.AddHeader("Accept", "application/json");
-            //request.Parameters.Clear();
-            //request.AddParameter("application/json; charset=utf-8", ParameterType.RequestBody);
-            //request.AddParameter(s);
-            //request.AddParameter("body", "bar");
-            //request.AddParameter("userID", 1);
             request.AddHeader("Accept", "application/json");
             request.Parameters.Clear();
             request.AddParameter("application/json", s, ParameterType.RequestBody);
-            //request.AddUrlSegment("id", "11");
 
             Posts posts = support.Execute<Posts>(request, client);
             Assert.AreEqual("bar", posts.body, string.Format("Expected body {0} is not matching with actual posted {1}", "bar", posts.body));
-            //  Assert.AreEqual(3, comment.postId);
 
         }
 
-
-        [Test]
-        public void Can_Authenticate_With_Basic_Http_Auth()
-        {
-            //var baseUrl = new Uri("http://localhost:8888/");
-
-            SupportClass support = new SupportClass();
-            using (SimpleServer.Create(client.BaseUrl.AbsoluteUri, UsernamePasswordEchoHandler))
-            {
-                var client = new RestClient(ValidURI)
-                {
-                    Authenticator = new HttpBasicAuthenticator("testuser", "testpassword")
-                };
-                var request = new RestRequest("test");
-                var response = client.Execute(request);
-
-                Assert.IsTrue(response.Content.Contains("testuser | testpassword") );
-            }
-        }
         [Test]
         public void Can_Authenticate_With_Basic_Auth()
         {
-
             AuthContext context = new BasicAuthContext("prachijk", "prachi");
-            IAuthentication ias = new BasicAuthentication();
-            ias.setAuthContext(context);
+            XAuthentication xas = new BasicAuthentication(context);
 
             var request = new RestRequest("/api/login", Method.POST);
-            ias.Authenticate(client, request);
+            xas.Authenticate(client, request);
             var response = client.Execute(request);
-            Assert.IsTrue(response.Content.Contains("testuser | testpassword"));
-            }
+            Assert.IsTrue(response.Content.Contains("authenticated"));
         }
-
-
-
-    
-
+    }
 }

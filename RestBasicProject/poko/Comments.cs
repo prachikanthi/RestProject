@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RestBasicProject
+﻿namespace RestBasicProject
 {
-   public class Comments
+    public class Comments
     {
         public int postId { get; set; }
         public int id { get; set; }

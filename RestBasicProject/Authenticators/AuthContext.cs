@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RestBasicProject.Authenticators
+﻿namespace RestBasicProject.Authenticators
 {
-   public class AuthContext
+    public class AuthContext
     {
     }
 }

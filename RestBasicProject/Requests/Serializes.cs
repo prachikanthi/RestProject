@@ -1,37 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RestSharp.Extensions;
-using RestSharp;
-using RestSharp.Validation;
+﻿using Newtonsoft.Json;
 using RestSharp.Serializers;
-using Newtonsoft.Json;
+using System;
 
 namespace RestBasicProject
 {
     [Serializable]
     class Serializes : ISerializer
     {
-        //private ISerializer serializer;
-
-        //public Serializes(ISerializer serializer)
-        //{
-        //    this.serializer = serializer;
-        //}
-
-        public  string Serialize(object obj)
+        public string Serialize(object obj)
         {
-            //  string str =JsonSerializer
-            var str= JsonConvert.SerializeObject(obj, Formatting.None);
-           // return JsonConvert.SerializeObject(obj, Formatting.None);
-
-            //string str=  serializer.Serialize(obj);
-
+            var str = JsonConvert.SerializeObject(obj, Formatting.None);
             return str;
         }
-
 
         public string ContentType { get; set; }
 
