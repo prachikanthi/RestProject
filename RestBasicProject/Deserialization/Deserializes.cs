@@ -10,34 +10,65 @@ using System.Reflection;
 
 namespace RestBasicProject
 {
+    /// <summary>
+    /// This is deserialization Class
+    /// </summary>
     public class Deserializes : IDeserializer
     {
+        /// <summary>
+        /// This is variable to set culture
+        /// </summary>
         public CultureInfo Culture { get; set; }
 
+        /// <summary>
+        /// Constructor of Deserializes class
+        /// </summary>
         public Deserializes()
         {
             Culture = CultureInfo.InvariantCulture;
         }
 
+        /// <summary>
+        /// This is variable to set user id of Posts
+        /// </summary>
         public string ContentType
         {
             get { return "application/json"; } // Probably used for Serialization?
             set { }
         }
 
+        /// <summary>
+        /// This is variable to data format of IDeserializer
+        /// </summary>
         public string DateFormat { get; set; }
 
+        /// <summary>
+        /// This is variable to find root element of IDeserializer
+        /// </summary>
         public string RootElement { get; set; }
 
+        /// <summary>
+        /// This is variable to get namespace of IDeserializer
+        /// </summary>
         public string Namespace { get; set; }
 
+        /// <summary>
+        /// Desrializes response by finding roor of response content
+        /// </summary>
+        /// <typeparam name="T">Rest sharp parameters types-RestResponse</typeparam>
+        /// <param name="response"></param>
+        /// <returns>return response by deserializing JSON response into proper return type</returns>
         T IDeserializer.Deserialize<T>(IRestResponse response)
         {
             var json = FindRoot(response.Content);
 
             return (T)ConvertValue(typeof(T).GetTypeInfo(), json);
         }
-
+        /// <summary>
+        /// Returns root if response contains it
+        /// </summary>
+        /// <param name="content"></param>
+        /// <returns></returns>
         private object FindRoot(string content)
         {
             object json = SimpleJson.SimpleJson.DeserializeObject(content);
@@ -51,7 +82,12 @@ namespace RestBasicProject
 
 
         }
-
+        /// <summary>
+        /// Json response converts to its expected data type and culture
+        /// </summary>
+        /// <param name="typeInfo"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         private object ConvertValue(TypeInfo typeInfo, object value)
         {
             string stringValue = Convert.ToString(value, Culture);
@@ -157,6 +193,13 @@ namespace RestBasicProject
 
             return instance;
         }
+
+        /// <summary>
+        /// Gets type of response and mapping it with its expected data type
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
 
         private object Map(object target, IDictionary<string, object> data)
         {

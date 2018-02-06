@@ -5,10 +5,16 @@ using System.Net;
 
 namespace RestBasicProject
 {
+    /// <summary>
+    /// Examples of different Verification
+    /// includes Post,Get,Basic authentication
+    /// </summary>
     [TestFixture]
     class ValidateStatusCodes : BaseClass
     {
-
+        /// <summary>
+        /// This test script is for Status Code verification method
+        /// </summary>
         [Test]
         public void validateStatusCodeForComments()
         {
@@ -18,6 +24,9 @@ namespace RestBasicProject
                    string.Format("Expected status code {0} is not matching with actual {1}", HttpStatusCode.OK, response.StatusCode));
         }
 
+        /// <summary>
+        /// This test script is for GET method
+        /// </summary>
         [Test]
         public void validateCommentsUsingID()
         {
@@ -29,6 +38,9 @@ namespace RestBasicProject
             Assert.AreEqual(3, comment.postId);
 
         }
+        /// <summary>
+        /// This test script is for POST method
+        /// </summary>
         [Test]
         public void validateCommentsUsingIDPost()
         {
@@ -51,11 +63,13 @@ namespace RestBasicProject
             Assert.AreEqual("bar", posts.body, string.Format("Expected body {0} is not matching with actual posted {1}", "bar", posts.body));
 
         }
-
+        /// <summary>
+        /// This test script for use of basic authentication
+        /// </summary>
         [Test]
         public void Can_Authenticate_With_Basic_Auth()
         {
-            AuthContext context = new BasicAuthContext("prachijk", "prachi");
+            AuthContext context = new BasicAuthContext(username, password);
             XAuthentication xas = new BasicAuthentication(context);
 
             var request = new RestRequest("/api/login", Method.POST);
